@@ -1,0 +1,56 @@
+/* Boîte signup centrée */
+.auth-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Titre */
+.auth-box h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+/* Champs + bouton */
+.auth-box input,
+.auth-box button {
+  width: 100%;
+  padding: 0.9rem;
+  margin: 0.6rem 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.auth-box button {
+  background: #0096c7;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease-in-out;
+}
+
+.auth-box button:hover {
+  background: #0077a2;
+}
+
+/* Erreurs */
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .auth-box {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+}

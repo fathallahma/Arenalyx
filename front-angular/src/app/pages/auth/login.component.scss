@@ -1,0 +1,116 @@
+/* Met tout le conteneur au centre vertical + horizontal */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;        /* prend toute la hauteur */
+  background: #f5f7fa;  /* léger fond gris/bleu */
+}
+
+/* Boîte de connexion */
+.auth-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+/* Titre */
+.auth-box h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+/* Champs + bouton */
+.auth-box input,
+.auth-box button {
+  width: 100%;
+  padding: 0.9rem;
+  margin: 0.6rem 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Bouton principal */
+.auth-box button[type="submit"] {
+  background: #0096c7;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease-in-out;
+}
+
+.auth-box button[type="submit"]:hover {
+  background: #0077a2;
+}
+
+/* Bouton œil sous le champ password */
+.password-toggle {
+  margin-top: -0.3rem;
+  margin-bottom: 0.6rem;
+  text-align: right;
+}
+
+.password-toggle button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0096c7;
+  font-size: 0.9rem;
+  padding: 0;
+}
+
+.password-toggle button:hover {
+  text-decoration: underline;
+}
+
+/* Liens supplémentaires */
+.additional-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.additional-links a {
+  color: #0096c7;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.additional-links a:hover {
+  text-decoration: underline;
+}
+
+/* Messages d’erreur */
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .auth-box {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .auth-box h2 {
+    font-size: 1.2rem;
+  }
+
+  .auth-box input,
+  .auth-box button {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+}
