@@ -5,10 +5,9 @@ import { useDispatch } from "react-redux";
 import { connectUser } from "../../store/Store";
 import Signup from './Signup';
 import ForgotPassword from './ForgotPassword';
-import Logo from '../../assets/logo.png';
-import Back from '../../assets/back.jpg';
-import Plant from '../../assets/plant.png';
-import Tablet from '../../assets/tablet.png';
+import Logo from '../../assets/logo.png';        // ← remplace par ton logo blanc si tu as
+import ArenaBg from '../../assets/arena.png';
+import StadiumBg from '../../assets/back.jpg';    // ← image de fond “stade” (peut être la tienne)
 import "../../styles/authentification/Login.css";
 
 export default function Login({ onLogin }) {
@@ -25,7 +24,6 @@ export default function Login({ onLogin }) {
   const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   const handleLogin = () => {
-    console.log("Sending request to:", axios.defaults.baseURL + "/api/v1/user/login");
     axios.post("/api/v1/user/login", { email, password })
       .then((response) => {
         const user = response.data;
@@ -38,78 +36,100 @@ export default function Login({ onLogin }) {
             darkMode: user.darkMode,
             applications: user.applications
           }));
-          onLogin(); // ✅ met à jour isAuthenticated dans App.js
+          onLogin?.();
           navigate("/home");
           setErrorMessage(null);
         }
       })
       .catch((error) => {
-            if (error.response) {
-                if (error.response.status === 401) {
-                setErrorMessage("Email ou mot de passe invalide");
-                } else {
-                setErrorMessage("Erreur : " + error.response.status);
-                }
-                console.error("Erreur API:", error.response);
-            } else if (error.request) {
-                setErrorMessage("Aucune réponse du serveur.");
-                console.error("Erreur réseau:", error.request);
-            } else {
-                setErrorMessage("Erreur inconnue : " + error.message);
-                console.error("Erreur inconnue:", error.message);
-            }
-        });
-
+        if (error.response) {
+          if (error.response.status === 401) {
+            setErrorMessage("Email ou mot de passe invalide");
+          } else {
+            setErrorMessage("Erreur : " + error.response.status);
+          }
+        } else if (error.request) {
+          setErrorMessage("Aucune réponse du serveur.");
+        } else {
+          setErrorMessage("Erreur inconnue : " + error.message);
+        }
+      });
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
+  const toggleShowPassword = () => setShowPassword((v) => !v);
+
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter') handleLogin();
   };
 
   return (
-    <div className="login-page">
-      <div className="login-left">
-        <div className="login-tablet-container">
-          <img src={Tablet} alt="Tablet" className="login-tablet" />
-        </div>
-        <div className="login-plant-container">
-          <img src={Plant} alt="Plant" className="login-plant" />
-        </div>
-        <div className="login-back-container">
-          <img src={Back} alt="Back" className="login-back" />
-        </div>
-      </div>
+    <div className="arena-login">
+      {/* Fond stade + dégradé */}
+      <div className="arena-bg" style={{ backgroundImage: `url(${StadiumBg})` }} />
 
-      <div className={`login-box ${isSignup || isForgotPassword ? "move-transition" : ""}`}>
-        <img src={Logo} alt="Logo" className="login-logo" />
+      <div className={`arena-card ${isSignup || isForgotPassword ? "move-transition" : ""}`}>
+        {/* Logo marque */}
+        <img src={Logo} alt="Logo Arenalyx" className="arena-logo" />
+        <h1 className="arena-brand">ARENALYX</h1>
 
         {isSignup ? (
-          <Signup onLogin={onLogin} />  // ✅ onLogin transmis ici
+          <Signup onLogin={onLogin} />
         ) : isForgotPassword ? (
           <ForgotPassword />
         ) : (
           <>
-            <h2>Bienvenue dans votre espace DoctoMaroc</h2>
+            <h2 className="arena-title">Se connecter</h2>
+
+            <label className="arena-label" htmlFor="email">Adresse e-mail</label>
             <input
-              type="text"
-              placeholder="Identifiant ou Email"
+              id="email"
+              type="email"
+              placeholder="Adresse e-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={onKeyDown}
+              className="arena-input"
+              autoComplete="email"
             />
-            <div className="password-field">
+
+            <label className="arena-label" htmlFor="password">Mot de passe</label>
+            <div className="arena-password">
               <input
+                id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Mot de passe"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={onKeyDown}
+                className="arena-input"
+                autoComplete="current-password"
               />
-              <button className="show-password" onClick={toggleShowPassword}>
+              <button
+                type="button"
+                className="arena-eye"
+                aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                onClick={toggleShowPassword}
+              >
                 {showPassword ? "👁️" : "👁️‍🗨️"}
               </button>
             </div>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <button onClick={handleLogin}>Se connecter</button>
-            <div className="additional-links">
+
+            {errorMessage && <p className="arena-error">{errorMessage}</p>}
+
+            <button className="arena-primary" onClick={handleLogin}>
+              Se connecter
+            </button>
+
+            <div className="arena-divider"><span>ou</span></div>
+
+            <button type="button" className="arena-sso">
+              <span className="arena-sso-ic">🟢</span> Se connecter avec Google
+            </button>
+            <button type="button" className="arena-sso">
+              <span className="arena-sso-ic">🧿</span> Se connecter avec Microsoft
+            </button>
+
+            <div className="arena-links">
               <a onClick={() => setIsForgotPassword(true)}>Mot de passe oublié ?</a>
               <a onClick={() => setIsSignup(true)}>Première connexion</a>
             </div>
@@ -117,15 +137,10 @@ export default function Login({ onLogin }) {
         )}
 
         {(isSignup || isForgotPassword) && (
-          <a className="back-to-login" onClick={() => {
-            setIsSignup(false);
-            setIsForgotPassword(false);
-          }}>Retour</a>
+          <a className="arena-back" onClick={() => { setIsSignup(false); setIsForgotPassword(false); }}>
+            Retour
+          </a>
         )}
-
-        <div className="login-plant-container-mobile">
-          <img src={Plant} alt="Plant" className="login-plant-mobile" />
-        </div>
       </div>
     </div>
   );
