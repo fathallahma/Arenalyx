@@ -5,9 +5,8 @@ import { useDispatch } from "react-redux";
 import { connectUser } from "../../store/Store";
 import Signup from './Signup';
 import ForgotPassword from './ForgotPassword';
-import Logo from '../../assets/logo.png';        // ← remplace par ton logo blanc si tu as
-import ArenaBg from '../../assets/arena.png';
-import StadiumBg from '../../assets/back.jpg';    // ← image de fond “stade” (peut être la tienne)
+import Logo from '../../assets/logo.png';
+import StadiumBg from '../../assets/back.jpg';
 import "../../styles/authentification/Login.css";
 
 export default function Login({ onLogin }) {
@@ -43,11 +42,9 @@ export default function Login({ onLogin }) {
       })
       .catch((error) => {
         if (error.response) {
-          if (error.response.status === 401) {
-            setErrorMessage("Email ou mot de passe invalide");
-          } else {
-            setErrorMessage("Erreur : " + error.response.status);
-          }
+          setErrorMessage(error.response.status === 401
+            ? "Email ou mot de passe invalide"
+            : "Erreur : " + error.response.status);
         } else if (error.request) {
           setErrorMessage("Aucune réponse du serveur.");
         } else {
@@ -56,19 +53,29 @@ export default function Login({ onLogin }) {
       });
   };
 
-  const toggleShowPassword = () => setShowPassword((v) => !v);
-
-  const onKeyDown = (e) => {
-    if (e.key === 'Enter') handleLogin();
-  };
+  const toggleShowPassword = () => setShowPassword(v => !v);
+  const onKeyDown = (e) => { if (e.key === 'Enter') handleLogin(); };
 
   return (
     <div className="arena-login">
-      {/* Fond stade + dégradé */}
+      {/* Fond stade + glow identique à la Landing */}
       <div className="arena-bg" style={{ backgroundImage: `url(${StadiumBg})` }} />
 
+      {/* Bouton retour vers Landing */}
+      <button
+        type="button"
+        className="arena-back-landing"
+        aria-label="Retour à la page d’accueil"
+        onClick={() => navigate('/landing')}
+      >
+        <svg viewBox="0 0 24 24" className="arena-back-ic" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+        <span>Accueil</span>
+      </button>
+
       <div className={`arena-card ${isSignup || isForgotPassword ? "move-transition" : ""}`}>
-        {/* Logo marque */}
+        {/* Branding / couleurs identiques */}
         <img src={Logo} alt="Logo Arenalyx" className="arena-logo" />
         <h1 className="arena-brand">ARENALYX</h1>
 
@@ -137,11 +144,32 @@ export default function Login({ onLogin }) {
         )}
 
         {(isSignup || isForgotPassword) && (
-          <a className="arena-back" onClick={() => { setIsSignup(false); setIsForgotPassword(false); }}>
+          <a
+            className="arena-back"
+            onClick={() => { setIsSignup(false); setIsForgotPassword(false); }}
+          >
             Retour
           </a>
         )}
       </div>
+
+      {/* Barre du bas (droits + liens) – même style que Landing */}
+      <footer className="arena-footer">
+        <div className="arena-footer-inner">
+          <div className="arena-footer-brand">
+            <span className="arena-footer-logo" />
+            <span>Arenalyx</span>
+          </div>
+          <nav className="arena-footer-nav" aria-label="Liens légaux">
+            <a href="/legal/terms">Conditions</a>
+            <a href="/legal/privacy">Confidentialité</a>
+            <a href="/legal/security">Sécurité</a>
+          </nav>
+          <span className="arena-footnote">
+            © {new Date().getFullYear()} Arenalyx. Tous droits réservés.
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }

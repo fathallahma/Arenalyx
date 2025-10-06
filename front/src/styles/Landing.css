@@ -1,0 +1,239 @@
+/* === Variables & reset === */
+:root {
+  --bg: #0b1220;
+  --panel: #0e1729;
+  --muted: #a7b3c8;
+  --txt: #e9eef6;
+  --accent: #7aa2ff;
+  --accent-2: #9a7cff;
+  --line: rgba(255,255,255,0.08);
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--txt); font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial; }
+
+/* === Layout === */
+.alx-root { display: flex; flex-direction: column; min-height: 100dvh; }
+
+/* Header */
+.alx-header {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, rgba(11,18,32,.85), rgba(11,18,32,.45));
+  border-bottom: 1px solid var(--line);
+}
+.alx-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--txt); }
+.alx-logo { width: 28px; height: 28px; fill: url(#alx-grad); filter: drop-shadow(0 6px 14px rgba(122,162,255,.25)); }
+.alx-brand-text { font-weight: 700; letter-spacing: .5px; }
+.alx-nav { display: flex; align-items: center; gap: 18px; }
+.alx-nav a { color: var(--muted); text-decoration: none; font-weight: 500; }
+.alx-nav a:hover { color: var(--txt); }
+.alx-login {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #0b1220 !important; padding: 10px 14px; border-radius: 12px; font-weight: 700;
+}
+
+/* Hero */
+.alx-hero { position: relative; padding: 80px 24px 56px; overflow: hidden; }
+.alx-hero-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+.alx-hero h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.05; margin: 0; }
+.alx-accent { background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.alx-hero p { color: var(--muted); margin: 16px auto 0; max-width: 800px; }
+.alx-cta { display: inline-flex; gap: 12px; margin-top: 28px; }
+.alx-btn { border-radius: 12px; padding: 12px 18px; border: 1px solid var(--line); text-decoration: none; color: var(--txt); display: inline-flex; align-items: center; gap: 8px; font-weight: 600; box-shadow: var(--shadow); }
+.alx-btn:hover { transform: translateY(-1px); }
+.alx-btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #0b1220; border: none; }
+.alx-btn-ghost { background: rgba(255,255,255,.03); }
+
+.alx-kpis { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; padding: 0; margin: 36px auto 0; max-width: 700px; }
+.alx-kpis li { background: radial-gradient(120% 120% at 10% 10%, rgba(122,162,255,.09), rgba(154,124,255,.05) 40%, rgba(255,255,255,.02) 100%); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.alx-kpis strong { font-size: 20px; }
+.alx-kpis span { color: var(--muted); display: block; margin-top: 4px; font-size: 12px; }
+
+/* Hero BG decorations */
+.alx-hero-bg { position: absolute; inset: 0; pointer-events: none; }
+.alx-glow { position: absolute; width: 520px; height: 520px; border-radius: 50%; filter: blur(70px); opacity: .65; }
+.alx-glow-1 { top: -120px; left: -80px; background: radial-gradient(circle at 30% 30%, rgba(122,162,255,.38), transparent 60%); }
+.alx-glow-2 { bottom: -160px; right: -120px; background: radial-gradient(circle at 70% 70%, rgba(154,124,255,.38), transparent 60%); }
+.alx-rings { position: absolute; inset: 0; background:
+  radial-gradient(1200px 400px at 50% 110%, rgba(255,255,255,.06), transparent 60%),
+  radial-gradient(1200px 600px at 50% -40%, rgba(255,255,255,.05), transparent 60%);
+  mask: linear-gradient(#0000, #000 15%, #000 85%, #0000);
+}
+
+/* Sections */
+.alx-section { padding: 64px 24px; }
+.alx-section-head { max-width: 900px; margin: 0 auto 26px; text-align: center; }
+.alx-section h2 { font-size: clamp(26px, 4vw, 36px); margin: 0 0 6px; }
+.alx-section p { color: var(--muted); margin: 0; }
+
+/* Cards grid */
+.alx-grid { display: grid; gap: 16px; grid-template-columns: repeat(4, minmax(0,1fr)); max-width: 1100px; margin: 26px auto 0; }
+@media (max-width: 1100px) { .alx-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 640px) { .alx-grid { grid-template-columns: 1fr; } }
+
+.alx-card { background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; min-height: 168px; box-shadow: var(--shadow); }
+.alx-card h3 { margin: 10px 0 6px; }
+.alx-card p { margin: 0; color: var(--muted); }
+.alx-card-icon { width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; border-radius: 12px; background: rgba(122,162,255,.12); border: 1px solid var(--line); }
+.alx-ico { width: 22px; height: 22px; fill: currentColor; color: var(--accent); }
+
+/* Demo block */
+.alx-demo { padding: 40px 24px 64px; }
+.alx-demo-card { max-width: 1000px; margin: 0 auto; background: linear-gradient(180deg, rgba(122,162,255,.08), rgba(154,124,255,.06)); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; text-align: center; box-shadow: var(--shadow); }
+.alx-video-placeholder { height: 360px; border-radius: 14px; border: 1px dashed var(--line); margin: 18px 0 8px; background:
+  linear-gradient(120deg, rgba(255,255,255,.04), rgba(255,255,255,.02)),
+  radial-gradient(600px 240px at 50% 0%, rgba(122,162,255,.15), transparent 60%); }
+
+/* Pricing */
+.alx-pricing { display: grid; gap: 16px; grid-template-columns: repeat(3, minmax(0,1fr)); max-width: 1000px; margin: 26px auto 0; }
+@media (max-width: 960px) { .alx-pricing { grid-template-columns: 1fr; max-width: 640px; } }
+.alx-price { position: relative; background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+.alx-price.is-highlight { outline: 2px solid rgba(122,162,255,.45); transform: translateY(-2px); }
+.alx-price-badge { font-weight: 700; color: var(--accent); }
+.alx-price-amount { display: flex; align-items: baseline; gap: 6px; margin: 6px 0 10px; }
+.alx-price-number { font-size: 28px; font-weight: 800; }
+.alx-price-per { color: var(--muted); }
+.alx-price-list { list-style: none; padding: 0; margin: 0 0 16px; color: var(--muted); }
+.alx-price-list li { margin: 8px 0; }
+.alx-price-cta { width: 100%; text-align: center; }
+
+/* Contact */
+.alx-contact { padding-bottom: 90px; }
+.alx-contact-grid { max-width: 1000px; margin: 24px auto 0; display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px; }
+@media (max-width: 980px) { .alx-contact-grid { grid-template-columns: 1fr; } }
+.alx-form { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+.alx-label { display: grid; gap: 8px; margin-bottom: 12px; font-weight: 600; }
+.alx-input, .alx-textarea {
+  width: 100%; background: rgba(255,255,255,.04); border: 1px solid var(--line);
+  border-radius: 12px; padding: 12px 14px; color: var(--txt); outline: none;
+}
+.alx-input:focus, .alx-textarea:focus { border-color: rgba(122,162,255,.5); box-shadow: 0 0 0 4px rgba(122,162,255,.15); }
+.alx-aside { border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); box-shadow: var(--shadow); }
+.alx-list { list-style: none; padding: 0; margin: 8px 0 0; color: var(--muted); }
+.alx-socials { display: flex; gap: 10px; margin-top: 14px; }
+.alx-social { width: 40px; height: 40px; display: inline-grid; place-items: center; border: 1px solid var(--line); border-radius: 12px; color: var(--txt); text-decoration: none; }
+.alx-social:hover { color: var(--bg); background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-color: transparent; }
+
+/* Footer */
+.alx-footer { border-top: 1px solid var(--line); margin-top: auto; background: rgba(0,0,0,.25); }
+.alx-footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto auto; gap: 16px; align-items: center; padding: 18px 24px; }
+@media (max-width: 780px) { .alx-footer-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; } }
+.alx-footer-brand { display: inline-flex; align-items: center; gap: 10px; }
+.alx-footer-nav { display: inline-flex; gap: 16px; }
+.alx-footer-nav a { color: var(--muted); text-decoration: none; }
+.alx-footer-nav a:hover { color: var(--txt); }
+.alx-footnote { color: var(--muted); font-size: 12px; }
+
+/* SVG gradient defs (for the logo) */
+.alx-root::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(1000px 400px at 10% 0%, rgba(122,162,255,.08), transparent 60%),
+    radial-gradient(1200px 500px at 90% 100%, rgba(154,124,255,.08), transparent 60%);
+  z-index: -1;
+}
+svg.alx-logo > defs, svg.alx-logo linearGradient { display: none; }
+
+/* =========================
+   Responsive overrides
+   (tablettes & mobiles)
+   ========================= */
+
+/* --- Large tablets (≤ 1024px) --- */
+@media (max-width: 1024px) {
+  .alx-header { padding: 12px 16px; }
+  .alx-nav { gap: 14px; }
+  .alx-hero { padding: 64px 16px 44px; }
+  .alx-hero-inner { max-width: 920px; }
+  .alx-kpis { max-width: 560px; }
+  .alx-grid { grid-template-columns: repeat(2, minmax(0,1fr)); max-width: 920px; }
+  .alx-demo-card { max-width: 920px; padding: 24px; }
+  .alx-pricing { max-width: 820px; }
+}
+
+/* --- Tablets portrait / petits laptops (≤ 820px) --- */
+@media (max-width: 820px) {
+  .alx-header {
+    padding: 10px 14px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .alx-brand { margin-right: auto; }
+  .alx-nav {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .alx-login { padding: 8px 12px; border-radius: 10px; }
+
+  .alx-hero { padding: 56px 14px 38px; }
+  .alx-hero p { max-width: 680px; }
+  .alx-kpis { grid-template-columns: repeat(2, minmax(0,1fr)); max-width: 520px; }
+
+  .alx-glow { width: 380px; height: 380px; filter: blur(60px); opacity: .55; }
+  .alx-glow-1 { top: -90px; left: -60px; }
+  .alx-glow-2 { bottom: -120px; right: -80px; }
+
+  .alx-section { padding: 48px 16px; }
+  .alx-section-head { margin-bottom: 18px; }
+
+  .alx-demo { padding: 32px 16px 48px; }
+  .alx-video-placeholder { height: 280px; }
+
+  .alx-pricing { grid-template-columns: 1fr; max-width: 560px; }
+  .alx-price { padding: 18px; }
+  .alx-price-number { font-size: 26px; }
+}
+
+/* --- Phones (≤ 640px) --- */
+@media (max-width: 640px) {
+  .alx-cta { width: 100%; flex-direction: column; gap: 10px; }
+  .alx-btn { width: 100%; justify-content: center; padding: 12px 16px; }
+
+  .alx-kpis { grid-template-columns: 1fr; max-width: 420px; margin-top: 24px; }
+  .alx-kpis li { padding: 12px 14px; }
+  .alx-kpis strong { font-size: 18px; }
+
+  .alx-grid { grid-template-columns: 1fr; max-width: 560px; }
+  .alx-card { min-height: auto; padding: 16px; }
+
+  .alx-demo-card { padding: 18px; }
+  .alx-video-placeholder { height: 220px; }
+
+  .alx-contact { padding-bottom: 64px; }
+  .alx-contact-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 16px; }
+  .alx-form, .alx-aside { padding: 14px; }
+
+  .alx-footer-inner { padding: 14px 16px; gap: 10px; }
+  .alx-footer-nav { gap: 12px; }
+
+  /* safe-area iOS */
+  .alx-root { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+  .alx-header, .alx-section, .alx-footer-inner {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+}
+
+/* --- Small phones (≤ 380px) --- */
+@media (max-width: 380px) {
+  .alx-hero { padding-top: 48px; }
+  .alx-hero h1 { font-size: clamp(26px, 8vw, 34px); }
+  .alx-login { padding: 8px 10px; }
+  .alx-video-placeholder { height: 180px; }
+}
+
+/* --- Accessibilité & interactions tactiles --- */
+@media (hover: none) and (pointer: coarse) {
+  .alx-btn, .alx-login, .alx-social { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .alx-btn:hover { transform: none; }
+}

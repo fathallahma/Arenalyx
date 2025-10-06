@@ -4,24 +4,18 @@ import { Provider } from 'react-redux';
 import { store } from './store/Store';
 import Login from './components/authentification/Login';
 import Home from './components/pages/Home';
+import Landing from './components/Landing'; // <-- ajoute ta page landing
 
 export default function App() {
-  // Initialisez `isAuthenticated` à partir de `localStorage`
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem('isAuthenticated') === 'true'
   );
 
-  // Mettez à jour `localStorage` lorsque `isAuthenticated` change
   useEffect(() => {
     localStorage.setItem('isAuthenticated', isAuthenticated);
   }, [isAuthenticated]);
 
-  // Fonction appelée lors de la connexion réussie
-  const handleLoginSuccess = () => {
-    setIsAuthenticated(true);
-  };
-
-  // Fonction de déconnexion
+  const handleLoginSuccess = () => setIsAuthenticated(true);
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('isAuthenticated');
@@ -31,16 +25,22 @@ export default function App() {
     <Provider store={store}>
       <Router>
         <Routes>
-        <Route
+          {/* Racine (aucun “slash” supplémentaire) -> redirection conditionnelle */}
+          <Route
             path="/"
             element={
               isAuthenticated ? (
-                <Home onLogout={handleLogout} />
+                <Navigate to="/home" replace />
               ) : (
-                <Navigate to="/login" replace />
+                <Navigate to="/landing" replace />
               )
             }
           />
+
+          {/* Landing page publique */}
+          <Route path="/landing" element={<Landing />} />
+
+          {/* Accueil appli (protégé) */}
           <Route
             path="/home"
             element={
@@ -51,6 +51,8 @@ export default function App() {
               )
             }
           />
+
+          {/* Auth */}
           <Route
             path="/login"
             element={
@@ -61,6 +63,9 @@ export default function App() {
               )
             }
           />
+
+          {/* Fallback 404 -> landing */}
+          <Route path="*" element={<Navigate to="/landing" replace />} />
         </Routes>
       </Router>
     </Provider>
