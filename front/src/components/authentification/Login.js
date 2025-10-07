@@ -51,7 +51,8 @@ export default function Login({ onLogin }) {
             ? "Email ou mot de passe invalide"
             : "Erreur : " + error.response.status);
         } else if (error.request) {
-          setErrorMessage("Aucune réponse du serveur.");
+          //setErrorMessage("Aucune réponse du serveur.");
+          setErrorMessage("E-mail ou mot de passe incorrect.");
         } else {
           setErrorMessage("Erreur inconnue : " + error.message);
         }
