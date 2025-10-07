@@ -77,7 +77,8 @@ export default function Login({ onLogin }) {
         <nav className="alx-nav" aria-label="Navigation principale">
           {/* Bouton retour dans la barre */}
           <a href="/landing">Accueil</a>
-          <a href="/landing#contact" className="alx-login" aria-current="page">Contact</a>
+          <a href="/landing#contact">Contact</a>
+          <a className="alx-login" aria-current="page">SignUp</a>
         </nav>
       </header>
 
